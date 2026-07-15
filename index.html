@@ -4,62 +4,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>服務大樓405會議室預約系統</title>
-    <link rel="stylesheet" href="styles.css?v=1.0">
+    <title>會議室預約系統</title>
+    <link rel="stylesheet" href="styles.css?v=2.1">
 </head>
 
-<body>
-    <header>
-        <h1>會議室預約系統</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">首頁</a></li>
-                <li><a href="reservation405.html">預約會議室</a></li>
-                <li><a href="cancel.html">查詢/取消預約</a></li>
-            </ul>
-        </nav>
+<body class="home-body">
+    <a class="skip-link" href="#main-content">跳至主要內容</a>
+
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a class="site-brand" href="index.html" aria-current="page">會議室預約系統</a>
+            <nav aria-label="主要導覽">
+                <ul>
+                    <li><a href="index.html" aria-current="page">首頁</a></li>
+                    <li><a href="reservation405.html">預約會議室</a></li>
+                    <li><a href="cancel.html">查詢／取消預約</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <div class="hero"></div>
+    <main id="main-content" class="home-page" tabindex="-1">
+        <section class="home-intro" aria-labelledby="page-title">
+            <p class="eyebrow">公司內部會議空間</p>
+            <h1 id="page-title">會議室預約</h1>
+            <p>快速預約服務大樓 405 會議室，或查詢並管理既有預約。</p>
+        </section>
 
-        <section class="section">
-            <h2>會議室介紹</h2>
-            <div class="room-list">
-                <div class="room">
-                    <h3>服務大樓405會議室</h3>
-                    <p>容納人數：10人</p>
-                    <p>設施：投影儀、白板</p>
-                    <a href="reservation405.html" class="button">前往預約</a>
+        <div class="home-layout">
+            <section class="card home-room" aria-labelledby="room-title">
+                <div class="card__header home-room__header">
+                    <div>
+                        <p class="section-kicker">可預約空間</p>
+                        <h2 id="room-title">服務大樓 405 會議室</h2>
+                    </div>
+                    <span class="status-badge">開放預約</span>
                 </div>
-            </div>
-        </section>
 
-        <section class="section">
-            <h2>預約流程</h2>
-            <div class="flow">
-                <ol>
-                    <li>點選【前往預約】</li>
-                    <li>填寫預約資訊</li>
-                    <li>選擇日期與時間</li>
-                    <li>確認預約</li>
-                </ol>
-            </div>
-        </section>
+                <dl class="home-room__details">
+                    <div>
+                        <dt>容納人數</dt>
+                        <dd>10 人</dd>
+                    </div>
+                    <div>
+                        <dt>設備</dt>
+                        <dd>投影儀、白板</dd>
+                    </div>
+                    <div>
+                        <dt>可選開始時間</dt>
+                        <dd>09:00–16:30</dd>
+                    </div>
+                    <div>
+                        <dt>午休時間</dt>
+                        <dd>12:30–13:30 不開放</dd>
+                    </div>
+                </dl>
 
-        <section class="section contact">
-            <h2>聯絡我們</h2>
-            <p style="text-align:center;">
-                地址：高雄市新興區林森一路230號
-            </p>
-        </section>
+                <div class="home-room__actions">
+                    <a class="button button--primary" href="reservation405.html">立即預約</a>
+                    <a class="button button--secondary" href="cancel.html">查詢／取消預約</a>
+                </div>
+            </section>
+
+            <aside class="home-sidebar" aria-label="預約說明">
+                <section class="card quick-actions" aria-labelledby="quick-actions-title">
+                    <div class="card__header card__header--compact">
+                        <div>
+                            <p class="section-kicker">常用操作</p>
+                            <h2 id="quick-actions-title">快速開始</h2>
+                        </div>
+                    </div>
+                    <ul class="quick-actions__list">
+                        <li>
+                            <a href="reservation405.html">
+                                <strong>建立新預約</strong>
+                                <span>選擇日期、時段並填寫會議資訊</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="cancel.html">
+                                <strong>管理既有預約</strong>
+                                <span>使用電子郵件查詢或取消預約</span>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="alert alert--info home-notice" aria-labelledby="notice-title">
+                    <div class="alert__icon" aria-hidden="true">i</div>
+                    <div>
+                        <h2 id="notice-title" class="alert__title">預約前請留意</h2>
+                        <p class="alert__message">送出預約前，系統會檢查所選時段是否與既有預約衝突。</p>
+                    </div>
+                </section>
+            </aside>
+        </div>
     </main>
 
     <footer>
-        <p>© 2025 會議室預約系統。保留所有權利。</p>
+        <p>© 2026 會議室預約系統。保留所有權利。</p>
     </footer>
-
 </body>
+
 </html>
-
-

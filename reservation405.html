@@ -4,117 +4,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>預約會議室 - 服務大樓405</title>
-    <link rel="stylesheet" href="styles.css?v=1.0">
+    <title>預約會議室－服務大樓 405</title>
+    <link rel="stylesheet" href="styles.css?v=2.2">
 </head>
 
-<body>
-    <header>
-        <h1>預約會議室</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">首頁</a></li>
-                <li><a href="reservation405.html">預約會議室</a></li>
-                <li><a href="cancel.html">查詢/預約流程</a></li>
-            </ul>
-        </nav>
+<body class="reservation-body">
+    <a class="skip-link" href="#main-content">跳至主要內容</a>
+
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a class="site-brand" href="index.html">會議室預約系統</a>
+            <nav aria-label="主要導覽">
+                <ul>
+                    <li><a href="index.html">首頁</a></li>
+                    <li><a href="reservation405.html" aria-current="page">預約會議室</a></li>
+                    <li><a href="cancel.html">查詢／取消預約</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <main>
-        <div class="container">
-            <!-- Reservation Form Section -->
-            <div class="reservation-form">
-                <h2>預約會議室 - 服務大樓405</h2>
-                <form id="reservationForm">
-                    <label for="unit">申請單位</label>
-                    <input type="text" id="unit" name="unit" required><br>
 
-                    <label for="meetingName">會議名稱</label>
-                    <input type="text" id="meetingName" name="meetingName" required><br>
+    <main id="main-content" class="reservation-page" tabindex="-1">
+        <section class="page-intro" aria-labelledby="pageTitle">
+            <p class="eyebrow">服務大樓 405</p>
+            <h1 id="pageTitle">預約會議室</h1>
+            <p>先確認日期與時段，再填寫申請資訊。送出前系統會檢查是否與既有預約衝突。</p>
+        </section>
 
-                    <label for="name">姓名</label>
-                    <input type="text" id="name" name="name" required><br>
-
-                    <label for="email">電子郵件</label>
-                    <input type="email" id="email" name="email" required><br>
-
-                    <label for="date">預約日期</label>
-                    <input type="date" id="date" name="date" required><br>
-
-                    <label for="time">預約時間 (午休 12:30-13:30 不開放) </label>
-                    <select id="time" name="time" required>
-                        <option value="">請選擇時間</option>
-                        <option value="09:00">09:00</option>
-                        <option value="09:30">09:30</option>
-                        <option value="10:00">10:00</option>
-                        <option value="10:30">10:30</option>
-                        <option value="11:00">11:00</option>
-                        <option value="11:30">11:30</option>
-                        <option value="12:00">12:00</option>
-                        <option value="13:30">13:30</option>
-                        <option value="14:00">14:00</option>
-                        <option value="14:30">14:30</option>
-                        <option value="15:00">15:00</option>
-                        <option value="15:30">15:30</option>
-                        <option value="16:00">16:00</option>
-                        <option value="16:30">16:30</option>
-                    </select>
-
-                    <label for="duration">預約時長 (小時)</label><br>
-                    <select id="duration" name="duration" required>
-                        <option value="0.5">0.5 小時</option>
-                        <option value="1">1 小時</option>
-                        <option value="1.5">1.5 小時</option>
-                        <option value="2">2 小時</option>
-                        <option value="2.5">2.5 小時</option>
-                        <option value="3">3 小時</option>
-                        <option value="3.5">3.5 小時</option>
-                        <option value="4">4 小時</option>
-                    </select>
-
-                    <div id="reservationTime"></div>
-
-                    <button type="submit">確認預約</button>
-                </form>
+        <section class="room-summary" aria-label="會議室資訊">
+            <div>
+                <span class="room-summary__label">容納人數</span>
+                <strong>10 人</strong>
             </div>
+            <div>
+                <span class="room-summary__label">設備</span>
+                <strong>投影儀、白板</strong>
+            </div>
+            <div>
+                <span class="room-summary__label">可選開始時間</span>
+                <strong>09:00–16:30</strong>
+            </div>
+            <div>
+                <span class="room-summary__label">午休時間</span>
+                <strong>12:30–13:30 不開放</strong>
+            </div>
+        </section>
 
-            <!-- Calendar Section -->
-            <div class="calendar">
-                <h2>當月行事曆</h2>
-                <div class="calendar-controls">
-                    <label for="yearSelect">選擇年份：</label>
-                    <select id="yearSelect"></select>
-                    <label for="monthSelect">選擇月份：</label>
-                    <select id="monthSelect">
-                        <option value="0">一月</option>
-                        <option value="1">二月</option>
-                        <option value="2">三月</option>
-                        <option value="3">四月</option>
-                        <option value="4">五月</option>
-                        <option value="5">六月</option>
-                        <option value="6">七月</option>
-                        <option value="7">八月</option>
-                        <option value="8">九月</option>
-                        <option value="9">十月</option>
-                        <option value="10">十一月</option>
-                        <option value="11">十二月</option>
-                    </select>
-                </div>
-                <div id="calendar">
-                    <!-- 行事曆內容將由 JavaScript 動態生成 -->
-                </div>
-                <div class="reserved-slots-container">
-                    <h3>點擊日期查看已預約時段</h3>
-                    <div id="reservedSlots"></div>
-                </div>
+        <div id="formAlert" class="alert alert--error page-alert" role="alert" tabindex="-1" hidden>
+            <div class="alert__icon" aria-hidden="true">!</div>
+            <div>
+                <h2 id="formAlertTitle" class="alert__title">請檢查預約資料</h2>
+                <p id="formAlertMessage" class="alert__message"></p>
             </div>
         </div>
+
+        <section id="successPanel" class="alert alert--success success-panel" role="status" tabindex="-1" hidden>
+            <div class="alert__icon" aria-hidden="true">✓</div>
+            <div class="success-panel__content">
+                <h2 class="alert__title">預約完成</h2>
+                <p class="alert__message">系統已收到您的預約。</p>
+                <dl class="success-summary">
+                    <div>
+                        <dt>會議室</dt>
+                        <dd>服務大樓 405</dd>
+                    </div>
+                    <div>
+                        <dt>日期</dt>
+                        <dd id="successDate">—</dd>
+                    </div>
+                    <div>
+                        <dt>時段</dt>
+                        <dd id="successTime">—</dd>
+                    </div>
+                    <div>
+                        <dt>會議名稱</dt>
+                        <dd id="successMeetingName">—</dd>
+                    </div>
+                </dl>
+                <a class="button button--secondary success-panel__action" href="cancel.html">查看我的預約</a>
+            </div>
+        </section>
+
+        <div class="booking-layout">
+            <section class="card reservation-form" aria-labelledby="formTitle">
+                <div class="card__header">
+                    <div>
+                        <p class="section-kicker">預約資料</p>
+                        <h2 id="formTitle">填寫申請資訊</h2>
+                    </div>
+                    <p class="required-note"><span aria-hidden="true">＊</span> 為必填欄位</p>
+                </div>
+
+                <form id="reservationForm" novalidate>
+                    <fieldset class="form-section">
+                        <legend>預約人資訊</legend>
+
+                        <div class="form-group">
+                            <label for="unit">申請單位 <span class="required-label">必填</span></label>
+                            <input type="text" id="unit" name="unit" autocomplete="organization"
+                                aria-describedby="unitError" required>
+                            <p id="unitError" class="field-error" hidden></p>
+                        </div>
+
+                        <div class="form-grid form-grid--two-columns">
+                            <div class="form-group">
+                                <label for="name">姓名 <span class="required-label">必填</span></label>
+                                <input type="text" id="name" name="name" autocomplete="name"
+                                    aria-describedby="nameError" required>
+                                <p id="nameError" class="field-error" hidden></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">電子郵件 <span class="required-label">必填</span></label>
+                                <input type="email" id="email" name="email" autocomplete="email"
+                                    inputmode="email" aria-describedby="emailHint emailError" required>
+                                <p id="emailHint" class="field-hint">用於查詢或取消預約。</p>
+                                <p id="emailError" class="field-error" hidden></p>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-section">
+                        <legend>會議資訊</legend>
+
+                        <div class="form-group">
+                            <label for="meetingName">會議名稱 <span class="required-label">必填</span></label>
+                            <input type="text" id="meetingName" name="meetingName"
+                                aria-describedby="meetingNameError" required>
+                            <p id="meetingNameError" class="field-error" hidden></p>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-section">
+                        <legend>日期與時間</legend>
+
+                        <div class="form-group">
+                            <label for="date">預約日期 <span class="required-label">必填</span></label>
+                            <input type="date" id="date" name="date" aria-describedby="dateHint dateError" required>
+                            <p id="dateHint" class="field-hint">也可以從右側行事曆選擇日期。</p>
+                            <p id="dateError" class="field-error" hidden></p>
+                        </div>
+
+                        <div class="form-grid form-grid--time">
+                            <div class="form-group">
+                                <label for="time">開始時間 <span class="required-label">必填</span></label>
+                                <select id="time" name="time" aria-describedby="timeHint timeError" required>
+                                    <option value="">請選擇時間</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="09:30">09:30</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="10:30">10:30</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="11:30">11:30</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:30">13:30</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="14:30">14:30</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="15:30">15:30</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="16:30">16:30</option>
+                                </select>
+                                <p id="timeHint" class="field-hint">午休 12:30–13:30 不開放。</p>
+                                <p id="timeError" class="field-error" hidden></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="duration">預約時長 <span class="required-label">必填</span></label>
+                                <select id="duration" name="duration" aria-describedby="durationError" required>
+                                    <option value="0.5">0.5 小時</option>
+                                    <option value="1">1 小時</option>
+                                    <option value="1.5">1.5 小時</option>
+                                    <option value="2">2 小時</option>
+                                    <option value="2.5">2.5 小時</option>
+                                    <option value="3">3 小時</option>
+                                    <option value="3.5">3.5 小時</option>
+                                    <option value="4">4 小時</option>
+                                </select>
+                                <p id="durationError" class="field-error" hidden></p>
+                            </div>
+                        </div>
+
+                        <div id="reservationTime" class="time-preview" role="status" aria-live="polite">
+                            選擇開始時間後顯示完整時段。
+                        </div>
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <button id="resetButton" class="button button--secondary" type="reset">取消填寫</button>
+                        <button class="button button--primary" type="submit">
+                            <span class="button__label">確認預約</span>
+                            <span class="button__spinner" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="booking-sidebar" aria-label="預約輔助資訊">
+                <section class="card booking-summary" aria-labelledby="summaryTitle">
+                    <div class="card__header card__header--compact">
+                        <div>
+                            <p class="section-kicker">即時確認</p>
+                            <h2 id="summaryTitle">預約摘要</h2>
+                        </div>
+                    </div>
+
+                    <div id="summaryEmpty" class="empty-state">
+                        <span class="empty-state__icon" aria-hidden="true">○</span>
+                        <p>填寫日期與時間後，這裡會顯示預約摘要。</p>
+                    </div>
+
+                    <dl id="summaryDetails" class="summary-list" hidden>
+                        <div>
+                            <dt>會議室</dt>
+                            <dd>服務大樓 405</dd>
+                        </div>
+                        <div>
+                            <dt>日期</dt>
+                            <dd id="summaryDate">—</dd>
+                        </div>
+                        <div>
+                            <dt>時段</dt>
+                            <dd id="summaryTime">—</dd>
+                        </div>
+                        <div>
+                            <dt>會議名稱</dt>
+                            <dd id="summaryMeetingName">尚未填寫</dd>
+                        </div>
+                        <div>
+                            <dt>申請人</dt>
+                            <dd id="summaryApplicant">尚未填寫</dd>
+                        </div>
+                    </dl>
+                </section>
+
+                <section class="card calendar" aria-labelledby="calendarTitle">
+                    <div class="card__header card__header--compact">
+                        <div>
+                            <p class="section-kicker">時段查詢</p>
+                            <h2 id="calendarTitle">預約行事曆</h2>
+                        </div>
+                    </div>
+
+                    <div class="calendar-controls">
+                        <div class="calendar-control">
+                            <label for="yearSelect">年份</label>
+                            <select id="yearSelect"></select>
+                        </div>
+                        <div class="calendar-control">
+                            <label for="monthSelect">月份</label>
+                            <select id="monthSelect">
+                                <option value="0">一月</option>
+                                <option value="1">二月</option>
+                                <option value="2">三月</option>
+                                <option value="3">四月</option>
+                                <option value="4">五月</option>
+                                <option value="5">六月</option>
+                                <option value="6">七月</option>
+                                <option value="7">八月</option>
+                                <option value="8">九月</option>
+                                <option value="9">十月</option>
+                                <option value="10">十一月</option>
+                                <option value="11">十二月</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="calendar-legend" aria-label="行事曆圖例">
+                        <span><i class="legend-dot legend-dot--booked" aria-hidden="true"></i>有預約</span>
+                        <span><i class="legend-dot legend-dot--selected" aria-hidden="true"></i>已選擇</span>
+                    </div>
+
+                    <div id="calendar" aria-label="選擇預約日期">
+                        <p class="loading-placeholder">正在載入行事曆…</p>
+                    </div>
+
+                    <div class="reserved-slots-container">
+                        <h3 id="reservedSlotsTitle">當日已預約時段</h3>
+                        <div id="reservedSlots" role="status" aria-live="polite">
+                            <div class="empty-state empty-state--compact">
+                                <p>選擇日期後顯示已預約時段。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+        </div>
+
+        <p id="pageStatus" class="visually-hidden" role="status" aria-live="polite"></p>
     </main>
 
-    <script src="script.js"></script>
-
     <footer>
-        <p>© 2025 會議室預約系統。保留所有權利。</p>
+        <p>© 2026 會議室預約系統。保留所有權利。</p>
     </footer>
+
+    <script src="script.js?v=2.2"></script>
 </body>
 
 </html>

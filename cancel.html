@@ -4,39 +4,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>取消預約 - 會議室預約系統</title>
-    <link rel="stylesheet" href="styles.css?v=1.0">
+    <title>查詢／取消預約－會議室預約系統</title>
+    <link rel="stylesheet" href="styles.css?v=2.2">
 </head>
 
-<body>
-    <header>
-        <h1>會議室預約系統</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">首頁</a></li>
-                <li><a href="reservation405.html">預約會議室</a></li>
-                <li><a href="cancel.html">查詢/取消預約</a></li>
-            </ul>
-        </nav>
+<body class="cancel-body">
+    <a class="skip-link" href="#main-content">跳至主要內容</a>
+
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a class="site-brand" href="index.html">會議室預約系統</a>
+            <nav aria-label="主要導覽">
+                <ul>
+                    <li><a href="index.html">首頁</a></li>
+                    <li><a href="reservation405.html">預約會議室</a></li>
+                    <li><a href="cancel.html" aria-current="page">查詢／取消預約</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <main>
-        <div class="container">
-            <div class="cancel-reservation-page">
-                <h2>查詢與取消預約</h2>
-                <form id="cancelForm">
-                    <label for="cancelEmailInput">請輸入您的電子郵件以查詢或取消預約：</label>
-                    <input type="email" id="cancelEmailInput" name="email" required>
-                    <button type="submit">查詢</button>
-                </form>
-                <div id="userReservations">
-                    <!-- 查詢結果將由 JavaScript 動態生成 -->
+
+    <main id="main-content" class="cancel-page" tabindex="-1">
+        <section class="page-intro" aria-labelledby="page-title">
+            <p class="eyebrow">管理既有預約</p>
+            <h1 id="page-title">查詢／取消預約</h1>
+            <p>輸入預約時使用的電子郵件，查看目前的預約紀錄或取消不再需要的預約。</p>
+        </section>
+
+        <section id="cancelPageAlert" class="alert alert--error page-alert" role="alert" tabindex="-1" hidden>
+            <div class="alert__icon" aria-hidden="true">!</div>
+            <div class="alert__content">
+                <h2 id="cancelPageAlertTitle" class="alert__title">無法完成操作</h2>
+                <p id="cancelPageAlertMessage" class="alert__message"></p>
+                <button id="retryReservationsButton" class="button button--secondary alert__action" type="button" hidden>
+                    重新載入
+                </button>
+            </div>
+        </section>
+
+        <section id="cancelSuccessAlert" class="alert alert--success page-alert" role="status" tabindex="-1" hidden>
+            <div class="alert__icon" aria-hidden="true">✓</div>
+            <div class="alert__content">
+                <h2 class="alert__title">預約已取消</h2>
+                <p id="cancelSuccessMessage" class="alert__message"></p>
+            </div>
+        </section>
+
+        <div class="cancel-layout">
+            <section class="card cancel-query" aria-labelledby="query-title">
+                <div class="card__header">
+                    <div>
+                        <p class="section-kicker">預約查詢</p>
+                        <h2 id="query-title">輸入查詢資料</h2>
+                    </div>
+                    <p class="required-note"><span aria-hidden="true">＊</span> 為必填欄位</p>
                 </div>
+
+                <form id="cancelForm" novalidate>
+                    <div class="form-group">
+                        <label for="cancelEmailInput">電子郵件 <span class="required-label">必填</span></label>
+                        <input type="email" id="cancelEmailInput" name="email" autocomplete="email"
+                            inputmode="email" aria-describedby="cancelEmailHint cancelEmailError" required>
+                        <p id="cancelEmailHint" class="field-hint">請輸入建立預約時使用的電子郵件。</p>
+                        <p id="cancelEmailError" class="field-error" hidden></p>
+                    </div>
+
+                    <div class="cancel-query__action">
+                        <button class="button button--primary" type="submit">
+                            <span class="button__label">查詢預約</span>
+                            <span class="button__spinner" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="card cancel-results" aria-labelledby="results-title">
+                <div class="card__header card__header--compact">
+                    <div>
+                        <p class="section-kicker">查詢結果</p>
+                        <h2 id="results-title">我的預約</h2>
+                    </div>
+                    <span id="resultCount" class="result-count" hidden></span>
+                </div>
+
+                <div id="userReservations" aria-busy="true" aria-live="polite">
+                    <div class="loading-state" role="status">
+                        <span class="loading-state__spinner" aria-hidden="true"></span>
+                        <p>正在載入預約資料…</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <p id="cancelPageStatus" class="visually-hidden" role="status" aria-live="polite"></p>
+    </main>
+
+    <dialog id="cancelDialog" class="cancel-dialog" aria-labelledby="cancelDialogTitle"
+        aria-describedby="cancelDialogDescription">
+        <div class="dialog__content">
+            <div class="dialog__header">
+                <p class="section-kicker">取消確認</p>
+                <h2 id="cancelDialogTitle">取消這筆預約？</h2>
+                <p id="cancelDialogDescription">取消後將無法復原，請先確認以下預約資訊。</p>
+            </div>
+
+            <dl class="dialog-summary">
+                <div>
+                    <dt>會議名稱</dt>
+                    <dd id="dialogMeetingName">—</dd>
+                </div>
+                <div>
+                    <dt>日期</dt>
+                    <dd id="dialogDate">—</dd>
+                </div>
+                <div>
+                    <dt>時段</dt>
+                    <dd id="dialogTime">—</dd>
+                </div>
+            </dl>
+
+            <div class="dialog__actions">
+                <button id="cancelDialogClose" class="button button--secondary" type="button">保留預約</button>
+                <button id="confirmCancelButton" class="button button--danger" type="button">
+                    <span class="button__label">確認取消</span>
+                    <span class="button__spinner" aria-hidden="true"></span>
+                </button>
             </div>
         </div>
-    </main>
+    </dialog>
+
     <footer>
-        <p>© 2025 會議室預約系統。保留所有權利。</p>
+        <p>© 2026 會議室預約系統。保留所有權利。</p>
     </footer>
+
     <script src="script.js"></script>
 </body>
 
