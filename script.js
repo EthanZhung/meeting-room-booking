@@ -765,7 +765,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 reservedThisDate.forEach(res => {
                     const { endTime } = logic.calculateTimeDetails(res.time, res.duration);
                     const meetingName = String(res.meetingName ?? '').trim() || '未命名會議';
-                    const maskedName = logic.maskReservationName(res.name);
+                    const reserverName = String(res.name ?? '').trim() || '未知姓名';
                     const slot = document.createElement('article');
                     slot.className = 'reserved-slot';
                     const time = document.createElement('strong');
@@ -778,7 +778,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     meeting.textContent = meetingName;
                     const reserver = document.createElement('span');
                     reserver.className = 'reserved-slot__reserver';
-                    reserver.textContent = `預約者：${maskedName}`;
+                    reserver.textContent = `預約者：${reserverName}`;
                     details.append(meeting, reserver);
                     slot.append(time, details);
                     reservedSlotsDiv.appendChild(slot);
@@ -917,15 +917,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const logic = {
-        maskReservationName(name) {
-            const characters = Array.from(String(name ?? '').trim());
-            if (characters.length === 0) return '未知姓名';
-            if (characters.length === 1) return '○';
-            if (characters.length === 2) return `${characters[0]}○`;
-
-            return `${characters[0]}${'○'.repeat(characters.length - 2)}${characters.at(-1)}`;
-        },
-
         calculateTimeDetails(startTime, duration) {
             const startHour = parseInt(startTime.split(':')[0]);
             const startMinute = parseInt(startTime.split(':')[1]);
