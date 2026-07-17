@@ -764,13 +764,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 reservedThisDate.sort((a, b) => a.time.localeCompare(b.time));
                 reservedThisDate.forEach(res => {
                     const { endTime } = logic.calculateTimeDetails(res.time, res.duration);
-                    const slot = document.createElement('div');
+                    const meetingName = String(res.meetingName ?? '').trim() || '未命名會議';
+                    const maskedName = logic.maskReservationName(res.name);
+                    const slot = document.createElement('article');
                     slot.className = 'reserved-slot';
                     const time = document.createElement('strong');
+                    time.className = 'reserved-slot__time';
                     time.textContent = `${res.time}–${endTime}`;
-                    const status = document.createElement('span');
-                    status.textContent = '已預約';
-                    slot.append(time, status);
+                    const details = document.createElement('div');
+                    details.className = 'reserved-slot__details';
+                    const meeting = document.createElement('span');
+                    meeting.className = 'reserved-slot__meeting';
+                    meeting.textContent = meetingName;
+                    const reserver = document.createElement('span');
+                    reserver.className = 'reserved-slot__reserver';
+                    reserver.textContent = `預約者：${maskedName}`;
+                    details.append(meeting, reserver);
+                    slot.append(time, details);
                     reservedSlotsDiv.appendChild(slot);
                 });
             },
@@ -907,6 +917,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const logic = {
+        maskReservationName(name) {
+            const characters = Array.from(String(name ?? '').trim());
+            if (characters.length === 0) return '未知姓名';
+            if (characters.length === 1) return '○';
+            if (characters.length === 2) return `${characters[0]}○`;
+
+            return `${characters[0]}${'○'.repeat(characters.length - 2)}${characters.at(-1)}`;
+        },
+
         calculateTimeDetails(startTime, duration) {
             const startHour = parseInt(startTime.split(':')[0]);
             const startMinute = parseInt(startTime.split(':')[1]);
