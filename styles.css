@@ -1504,9 +1504,9 @@ button:disabled:hover { /* 同時設定 hover 狀態，確保滑鼠移過去時�
 }
 
 #reservedSlots .reserved-slot {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 104px minmax(0, 1fr);
+    align-items: start;
     gap: 12px;
     padding: 10px 12px;
     margin: 8px 0 0;
@@ -1518,14 +1518,29 @@ button:disabled:hover { /* 同時設定 hover 狀態，確保滑鼠移過去時�
     font-size: 14px;
 }
 
-#reservedSlots .reserved-slot strong {
+#reservedSlots .reserved-slot__time {
     font-variant-numeric: tabular-nums;
+    line-height: 22px;
+    white-space: nowrap;
 }
 
-#reservedSlots .reserved-slot span {
+#reservedSlots .reserved-slot__details {
+    display: grid;
+    min-width: 0;
+    gap: 2px;
+}
+
+#reservedSlots .reserved-slot__meeting {
+    overflow-wrap: anywhere;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+#reservedSlots .reserved-slot__reserver {
     color: var(--color-warning);
     font-size: 13px;
     font-weight: 600;
+    line-height: 20px;
 }
 
 /* ===========================================================================
@@ -1922,6 +1937,11 @@ button:disabled:hover { /* 同時設定 hover 狀態，確保滑鼠移過去時�
 }
 
 @media (max-width: 479px) {
+    #reservedSlots .reserved-slot {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 4px;
+    }
+
     .site-header nav ul {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
