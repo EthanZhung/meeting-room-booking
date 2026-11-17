@@ -256,9 +256,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 this.ui.setLoading(true, "預約處理中…");
+                this.elements.submitButton.dispatchEvent(new Event('plane:start'));
                 try {
                     const result = await apiService.addReservation(this.config.GAS_URL, newReservation);
                     if (result.status === "success") {
+                        this.elements.submitButton.dispatchEvent(new Event('plane:success'));
                         this.elements.reservationForm.reset();
                         this.ui.showSuccess(newReservation);
                         await this.fetchData();
@@ -267,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         throw new Error(result.message || "後端回傳未知錯誤");
                     }
                 } catch (error) {
+                    this.elements.submitButton.dispatchEvent(new Event('plane:error'));
                     console.error("新增預約失敗:", error);
                     this.ui.showFormAlert('預約未完成', `系統無法完成預約：${error.message}`);
                 } finally {
@@ -296,6 +299,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.state.currentMonth = month - 1;
                     this.elements.yearSelect.value = year;
                     this.elements.monthSelect.value = month - 1;
+                    this.elements.yearSelect.dispatchEvent(new Event('selectsync'));
+                    this.elements.monthSelect.dispatchEvent(new Event('selectsync'));
                     this.ui.showReservedSlots(date);
                 } else {
                     this.ui.showReservedSlots(null);
@@ -355,9 +360,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
+                this.elements.cancelSubmitButton.dispatchEvent(new Event('plane:start'));
                 this.state.queriedEmail = email;
                 this.ui.hideCancelAlert();
                 this.ui.renderUserReservations(email);
+                this.elements.cancelSubmitButton.dispatchEvent(new Event('plane:success'));
             },
 
             handleCancelClick(event) {
@@ -516,11 +523,35 @@ document.addEventListener('DOMContentLoaded', () => {
             },
 
             showValidationErrors(errors) {
-                errors.forEach(error => this.showFieldError(error.fieldId, error.message));
+                const order = new Map([...App.elements.reservationForm.elements]
+                    .map((field, index) => [field.id, index]));
+                const orderedErrors = [...errors].sort((a, b) => order.get(a.fieldId) - order.get(b.fieldId));
+                orderedErrors.forEach(error => this.showFieldError(error.fieldId, error.message));
                 this.showFormAlert(
                     '請檢查預約資料',
-                    `共有 ${errors.length} 個欄位需要修正，請依欄位提示完成填寫。`
+                    `還有 ${orderedErrors.length} 個欄位需要填寫或修正，點選下方提示即可前往。`,
+                    false
                 );
+                const list = document.createElement('ul');
+                list.className = 'validation-links';
+                orderedErrors.forEach(error => {
+                    const item = document.createElement('li');
+                    item.dataset.field = error.fieldId;
+                    const link = document.createElement('a');
+                    const target = document.getElementById(`${error.fieldId}-trigger`)
+                        || document.getElementById(error.fieldId);
+                    link.href = `#${target.id}`;
+                    link.textContent = error.message;
+                    link.addEventListener('click', event => {
+                        event.preventDefault();
+                        target.focus();
+                        target.scrollIntoView({ block: 'center' });
+                    });
+                    item.append(link);
+                    list.append(item);
+                });
+                App.elements.formAlertMessage.after(list);
+                App.elements.formAlert.focus();
             },
 
             showFieldError(fieldId, message) {
@@ -541,6 +572,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 field.removeAttribute('aria-invalid');
                 errorElement.textContent = '';
                 errorElement.hidden = true;
+                const list = App.elements.formAlert?.querySelector('.validation-links');
+                if (list && field.validity.valid && (!field.required || field.value.trim())) {
+                    [...list.children].find(item => item.dataset.field === fieldId)?.remove();
+                    const count = list.children.length;
+                    if (count) {
+                        App.elements.formAlertMessage.textContent = `還有 ${count} 個欄位需要填寫或修正，點選下方提示即可前往。`;
+                    } else this.hideFormAlert();
+                }
             },
 
             clearFormFeedback() {
@@ -553,6 +592,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const { formAlert, formAlertTitle, formAlertMessage } = App.elements;
                 if (!formAlert || !formAlertTitle || !formAlertMessage) return;
 
+                formAlert.querySelector('.validation-links')?.remove();
                 formAlertTitle.textContent = title;
                 formAlertMessage.textContent = message;
                 formAlert.hidden = false;
@@ -563,6 +603,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!App.elements.formAlert) return;
                 App.elements.formAlert.hidden = true;
                 App.elements.formAlertMessage.textContent = '';
+                App.elements.formAlert.querySelector('.validation-links')?.remove();
             },
 
             showSuccess(reservation) {

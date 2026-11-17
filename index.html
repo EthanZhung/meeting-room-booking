@@ -4,8 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="public/site-icon.png?v=1.0">
+    <link rel="apple-touch-icon" href="public/site-icon.png?v=1.0">
     <title>會議室預約系統</title>
     <link rel="stylesheet" href="styles.css?v=2.1">
+    <link rel="stylesheet" href="glass.css?v=1.2">
+    <link rel="stylesheet" href="navigation.css?v=1.0">
+    <link rel="stylesheet" href="dropdown.css?v=1.1">
 </head>
 
 <body class="home-body">
@@ -25,18 +30,12 @@
     </header>
 
     <main id="main-content" class="home-page" tabindex="-1">
-        <section class="home-intro" aria-labelledby="page-title">
-            <p class="eyebrow">公司內部會議空間</p>
-            <h1 id="page-title">會議室預約</h1>
-            <p>快速預約服務大樓 405 會議室，或查詢並管理既有預約。</p>
-        </section>
-
         <div class="home-layout">
             <section class="card home-room" aria-labelledby="room-title">
                 <div class="card__header home-room__header">
                     <div>
                         <p class="section-kicker">可預約空間</p>
-                        <h2 id="room-title">服務大樓 405 會議室</h2>
+                        <h1 id="room-title" class="card-title">服務大樓 405 會議室</h1>
                     </div>
                     <span class="status-badge">開放預約</span>
                 </div>
@@ -104,6 +103,8 @@
     <footer>
         <p>© 2026 會議室預約系統。保留所有權利。</p>
     </footer>
+    <script src="navigation.js?v=1.0"></script>
+    <script src="dropdown.js?v=1.1"></script>
 </body>
 
 </html>

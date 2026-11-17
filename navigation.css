@@ -1,0 +1,55 @@
+.site-header nav ul.has-sliding-highlight {
+    position: relative;
+    isolation: isolate;
+}
+
+.site-header nav ul.has-sliding-highlight::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: var(--nav-width);
+    height: var(--nav-height);
+    border-radius: var(--radius-control);
+    background: var(--glass-dialog);
+    box-shadow: var(--shadow-card);
+    transform: translate(var(--nav-x), var(--nav-y));
+    pointer-events: none;
+    content: "";
+}
+
+.site-header nav ul.highlight-ready::before {
+    transition: transform 400ms cubic-bezier(.2, .9, .3, 1.1),
+        width 400ms cubic-bezier(.2, .9, .3, 1.1);
+}
+
+.site-header nav ul.has-sliding-highlight li a,
+.site-header nav ul.has-sliding-highlight li a:hover,
+.site-header nav ul.has-sliding-highlight li a[aria-current="page"] {
+    color: var(--color-text-secondary);
+    background: transparent;
+    box-shadow: none;
+    transition: color 200ms ease;
+}
+
+.site-header nav ul.has-sliding-highlight li a[data-highlighted] {
+    color: var(--color-primary-active);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-header nav ul.highlight-ready::before,
+    .site-header nav ul.has-sliding-highlight li a {
+        transition: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .site-header nav ul.has-sliding-highlight::before {
+        background: Highlight;
+        box-shadow: none;
+    }
+
+    .site-header nav ul.has-sliding-highlight li a[data-highlighted] {
+        color: HighlightText;
+    }
+}

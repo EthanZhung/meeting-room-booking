@@ -1,0 +1,88 @@
+.send-plane {
+    position: relative;
+    overflow: hidden;
+}
+
+.send-plane > .button__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.send-plane__icon {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+
+.send-plane__text {
+    display: inline-block;
+    min-width: 4em;
+    text-align: center;
+    pointer-events: none;
+}
+
+.send-plane[data-plane-phase="flying"] {
+    animation: send-plane-press 400ms cubic-bezier(.2,.9,.3,1.1);
+}
+
+.send-plane[data-plane-phase="flying"] .send-plane__icon {
+    animation: send-plane-flight 650ms both;
+}
+
+.send-plane[data-plane-phase="flying"] .send-plane__text {
+    animation: send-plane-label-out 230ms ease-in both;
+}
+
+.send-plane[data-plane-phase="pending"] .send-plane__icon,
+.send-plane[data-plane-phase="success"] .send-plane__icon {
+    opacity: 0;
+}
+
+.send-plane[data-plane-phase="success"] .send-plane__text,
+.send-plane[data-plane-phase="returning"] .send-plane__text {
+    animation: send-plane-label-in 300ms ease-out both;
+}
+
+.send-plane[data-plane-phase="returning"] .send-plane__icon {
+    animation: send-plane-return 400ms ease-out both;
+}
+
+@keyframes send-plane-press {
+    0%, 100% { transform: scale(1); }
+    35% { transform: scale(.94); }
+    75% { transform: scale(1.015); }
+}
+
+@keyframes send-plane-flight {
+    0% { transform: translate(0, 0) rotate(0); opacity: 1; }
+    30% { transform: translate(-7px, 3px) rotate(-12deg); opacity: 1; animation-timing-function: cubic-bezier(.55,.05,.8,.45); }
+    100% { transform: translate(150px, -70px) rotate(-28deg) scale(.65); opacity: 0; }
+}
+
+@keyframes send-plane-label-out {
+    to { transform: translateX(18px); opacity: 0; }
+}
+
+@keyframes send-plane-label-in {
+    from { transform: translateX(-14px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes send-plane-return {
+    from { transform: translate(-22px, 22px) rotate(-15deg); opacity: 0; }
+    to { transform: translate(0, 0) rotate(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .send-plane,
+    .send-plane .send-plane__icon,
+    .send-plane .send-plane__text {
+        animation: none !important;
+        transform: none;
+    }
+}

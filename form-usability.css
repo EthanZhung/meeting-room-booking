@@ -1,0 +1,192 @@
+.room-details {
+    margin-bottom: 24px;
+}
+
+.room-details > summary {
+    min-height: 48px;
+    padding: 12px 16px;
+    color: var(--color-text-secondary);
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-control);
+    font-size: 14px;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.room-details > summary:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+.room-details[open] > summary {
+    margin-bottom: 12px;
+}
+
+.room-details .room-summary {
+    margin-bottom: 0;
+}
+
+.reservation-form .card__header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.reservation-form .form-section legend {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 17px;
+}
+
+.form-step {
+    display: inline-flex;
+    flex: 0 0 28px;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    color: var(--color-primary-active);
+    background: var(--color-primary-subtle);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 50%;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.reservation-form .form-section + .form-section {
+    padding-top: 24px;
+    margin-top: 32px;
+}
+
+.reservation-form .form-group {
+    margin-bottom: 20px;
+}
+
+.reservation-form .form-grid {
+    gap: 20px;
+}
+
+.reservation-form .form-grid .form-group {
+    margin-bottom: 0;
+}
+
+.reservation-form .form-grid--two-columns {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.reservation-page .reservation-form .form-group label {
+    font-size: 15px;
+    line-height: 22px;
+}
+
+.reservation-page .reservation-form input,
+.reservation-page .reservation-form .reveal-select__trigger {
+    min-height: 50px;
+}
+
+.reservation-page .calendar .reveal-select__trigger {
+    min-height: 48px;
+}
+
+.booking-sidebar .calendar {
+    order: 0;
+}
+
+.reservation-form input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+}
+
+.reservation-form .time-preview {
+    margin-top: 20px;
+    font-variant-numeric: tabular-nums;
+}
+
+.reservation-form .form-actions {
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.reservation-form .form-actions .button {
+    min-height: 50px;
+}
+
+.cancel-body {
+    --cancel-page-width: 850px;
+}
+
+.cancel-body .site-header {
+    max-width: calc(var(--cancel-page-width) - 48px);
+}
+
+.cancel-page {
+    max-width: var(--cancel-page-width);
+}
+
+.cancel-query .card__header {
+    margin-bottom: 28px;
+}
+
+.cancel-query .field-hint {
+    margin-top: 10px;
+    line-height: 22px;
+}
+
+.validation-links {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px 16px;
+    padding-left: 20px;
+    margin: 12px 0 0;
+}
+
+.validation-links a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+    .validation-links {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 1023px) {
+    .reservation-page .booking-sidebar {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 479px) {
+    .reservation-page .room-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .reservation-page .room-summary > div {
+        padding: 12px;
+    }
+
+    .reservation-form .form-section legend {
+        gap: 8px;
+        font-size: 16px;
+    }
+
+    .reservation-form .form-actions {
+        align-items: stretch;
+    }
+
+    .reservation-form .form-actions .button {
+        width: 100%;
+    }
+
+    .cancel-query .card__header {
+        margin-bottom: 24px;
+    }
+}
