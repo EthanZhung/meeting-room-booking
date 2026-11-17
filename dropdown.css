@@ -1,0 +1,184 @@
+.reveal-select {
+    position: relative;
+    min-width: 0;
+}
+
+.reveal-select select.reveal-select__native {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.reveal-select .reveal-select__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    width: 100%;
+    min-height: 46px;
+    margin: 0;
+    padding: 10px 14px;
+    color: var(--color-text-primary);
+    background: var(--glass-control);
+    border: 1px solid var(--color-border-control);
+    border-radius: var(--radius-control);
+    box-shadow: inset 0 1px 2px var(--color-border-subtle);
+    font: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: left;
+    transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.reveal-select .reveal-select__trigger:hover {
+    background: var(--glass-control);
+    border-color: var(--color-border-strong);
+    transform: none;
+}
+
+.reveal-select__trigger:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+.reveal-select .reveal-select__trigger[aria-invalid="true"] {
+    background: var(--color-error-bg);
+    border-color: var(--color-error-border);
+}
+
+.reveal-select .reveal-select__trigger:disabled {
+    color: var(--color-text-muted);
+    background: var(--color-surface-strong);
+    border-color: var(--color-border-subtle);
+    opacity: 1;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.reveal-select__value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.reveal-select__arrow {
+    flex: 0 0 9px;
+    width: 9px;
+    height: 9px;
+    margin-right: 3px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 400ms cubic-bezier(.2,.9,.3,1.1);
+}
+
+.reveal-select__trigger[aria-expanded="true"] .reveal-select__arrow {
+    transform: translateY(2px) rotate(225deg);
+}
+
+.reveal-select__panel {
+    position: fixed;
+    z-index: 100;
+    display: none;
+    box-sizing: border-box;
+    inset: auto;
+    margin: 0;
+    padding: 6px;
+    overflow: auto;
+    overscroll-behavior: contain;
+    color: var(--color-text-primary);
+    background: var(--glass-dialog);
+    border: 1px solid var(--glass-edge);
+    border-radius: 16px;
+    box-shadow: var(--glass-shadow);
+    transform: scaleY(.6);
+    transform-origin: top;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 380ms cubic-bezier(.3,1.3,.5,1), opacity 180ms ease;
+}
+
+.reveal-select__panel.is-visible {
+    display: block;
+}
+
+.reveal-select__panel.opens-up {
+    transform-origin: bottom;
+}
+
+.reveal-select__panel.is-open {
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.reveal-select__option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 22px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 180ms ease, transform 240ms cubic-bezier(.3,1.3,.5,1), background-color 150ms ease;
+}
+
+.reveal-select__panel.is-open .reveal-select__option {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(var(--i) * .05s), calc(var(--i) * .05s), 0s;
+}
+
+.reveal-select__option.is-active,
+.reveal-select__option:hover {
+    color: var(--color-primary-active);
+    background: var(--color-primary-subtle);
+}
+
+.reveal-select__option[aria-selected="true"] {
+    color: var(--color-primary-active);
+    font-weight: 600;
+}
+
+.reveal-select__option[aria-selected="true"]::after {
+    margin-left: auto;
+    content: "✓";
+}
+
+.reveal-select__option[aria-disabled="true"] {
+    color: var(--color-text-muted);
+    background: transparent;
+    cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-select__arrow,
+    .reveal-select__panel,
+    .reveal-select__panel .reveal-select__option {
+        transition: none;
+        transition-delay: 0s;
+        transform: none;
+    }
+}
+
+@media (forced-colors: active) {
+    .reveal-select__panel {
+        background: Canvas;
+        border-color: CanvasText;
+    }
+
+    .reveal-select__option.is-active {
+        color: HighlightText;
+        background: Highlight;
+        border-color: Highlight;
+    }
+}

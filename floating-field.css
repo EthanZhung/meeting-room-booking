@@ -1,0 +1,101 @@
+.floating-field {
+    position: relative;
+    margin-top: 20px;
+}
+
+.cancel-page .floating-field input[type="email"] {
+    min-height: 58px;
+    padding: 17px 14px;
+    background: var(--color-surface-strong);
+    border: 0;
+    border-radius: var(--radius-control);
+    box-shadow: none;
+}
+
+.cancel-page .floating-field input[type="email"]:focus,
+.cancel-page .floating-field input[type="email"]:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+.cancel-page .floating-field input[type="email"][aria-invalid="true"] {
+    background: var(--color-error-bg);
+}
+
+.cancel-page .cancel-query__title {
+    margin: 0;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: normal;
+}
+
+.cancel-page .floating-field label {
+    position: absolute;
+    top: 17px;
+    left: 14px;
+    max-width: calc(100% - 28px);
+    margin: 0;
+    padding: 0 4px;
+    color: var(--color-text-secondary);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    transform-origin: left center;
+    cursor: text;
+    transition: transform 350ms cubic-bezier(.2, .8, .2, 1),
+        font-size 350ms cubic-bezier(.2, .8, .2, 1), color 200ms ease;
+}
+
+.floating-field:focus-within label,
+.floating-field input:not(:placeholder-shown) + label {
+    background: transparent;
+    font-size: 12px;
+    transform: translateY(-29px);
+}
+
+.cancel-page .floating-field:focus-within label {
+    color: var(--color-focus);
+}
+
+.floating-field__line {
+    position: absolute;
+    right: 12px;
+    bottom: 0;
+    left: 12px;
+    height: 2px;
+    background: var(--color-focus);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 350ms cubic-bezier(.2, .8, .2, 1);
+    pointer-events: none;
+}
+
+.floating-field:focus-within .floating-field__line {
+    transform: scaleX(1);
+}
+
+.cancel-page .floating-field input[aria-invalid="true"] + label {
+    color: var(--color-error);
+}
+
+.floating-field input[aria-invalid="true"] ~ .floating-field__line {
+    background: var(--color-error);
+    transform: scaleX(1);
+}
+
+@media (forced-colors: active) {
+    .cancel-page .floating-field input[type="email"]:focus-visible {
+        outline: 2px solid Highlight;
+    }
+
+    .floating-field__line {
+        background: Highlight;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cancel-page .floating-field label,
+    .floating-field__line {
+        transition: none;
+    }
+}

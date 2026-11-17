@@ -4,8 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="public/site-icon.png?v=1.0">
+    <link rel="apple-touch-icon" href="public/site-icon.png?v=1.0">
     <title>查詢／取消預約－會議室預約系統</title>
     <link rel="stylesheet" href="styles.css?v=2.2">
+    <link rel="stylesheet" href="glass.css?v=1.2">
+    <link rel="stylesheet" href="navigation.css?v=1.0">
+    <link rel="stylesheet" href="dropdown.css?v=1.1">
+    <link rel="stylesheet" href="send-plane.css?v=1.1">
+    <link rel="stylesheet" href="floating-field.css?v=1.3">
+    <link rel="stylesheet" href="form-usability.css?v=1.2">
 </head>
 
 <body class="cancel-body">
@@ -25,12 +33,6 @@
     </header>
 
     <main id="main-content" class="cancel-page" tabindex="-1">
-        <section class="page-intro" aria-labelledby="page-title">
-            <p class="eyebrow">管理既有預約</p>
-            <h1 id="page-title">查詢／取消預約</h1>
-            <p>輸入預約時使用的電子郵件，查看目前的預約紀錄或取消不再需要的預約。</p>
-        </section>
-
         <section id="cancelPageAlert" class="alert alert--error page-alert" role="alert" tabindex="-1" hidden>
             <div class="alert__icon" aria-hidden="true">!</div>
             <div class="alert__content">
@@ -54,18 +56,20 @@
             <section class="card cancel-query" aria-labelledby="query-title">
                 <div class="card__header">
                     <div>
-                        <p class="section-kicker">預約查詢</p>
-                        <h2 id="query-title">輸入查詢資料</h2>
+                        <h1 id="query-title" class="cancel-query__title">查詢我的預約</h1>
                     </div>
                     <p class="required-note"><span aria-hidden="true">＊</span> 為必填欄位</p>
                 </div>
 
                 <form id="cancelForm" novalidate>
                     <div class="form-group">
-                        <label for="cancelEmailInput">電子郵件 <span class="required-label">必填</span></label>
-                        <input type="email" id="cancelEmailInput" name="email" autocomplete="email"
-                            inputmode="email" aria-describedby="cancelEmailHint cancelEmailError" required>
-                        <p id="cancelEmailHint" class="field-hint">請輸入建立預約時使用的電子郵件。</p>
+                        <div class="floating-field">
+                            <input type="email" id="cancelEmailInput" name="email" autocomplete="email"
+                                placeholder=" " inputmode="email" aria-describedby="cancelEmailHint cancelEmailError" required>
+                            <label for="cancelEmailInput">電子郵件 <span class="required-label">必填</span></label>
+                            <span class="floating-field__line" aria-hidden="true"></span>
+                        </div>
+                        <p id="cancelEmailHint" class="field-hint">請使用建立預約時填寫的電子郵件，查詢後即可管理預約。</p>
                         <p id="cancelEmailError" class="field-error" hidden></p>
                     </div>
 
@@ -81,7 +85,6 @@
             <section class="card cancel-results" aria-labelledby="results-title">
                 <div class="card__header card__header--compact">
                     <div>
-                        <p class="section-kicker">查詢結果</p>
                         <h2 id="results-title">我的預約</h2>
                     </div>
                     <span id="resultCount" class="result-count" hidden></span>
@@ -137,7 +140,10 @@
         <p>© 2026 會議室預約系統。保留所有權利。</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2.5"></script>
+    <script src="navigation.js?v=1.0"></script>
+    <script src="dropdown.js?v=1.1"></script>
+    <script src="send-plane.js?v=1.1"></script>
 </body>
 
 </html>
