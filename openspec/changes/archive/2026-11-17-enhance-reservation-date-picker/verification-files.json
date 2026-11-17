@@ -1,0 +1,10 @@
+{
+  "date-picker.css": "be9134fb506bed8062108e51d781a3d21a18eb63194dae61f5808f9aecc1485e",
+  "date-picker.js": "4c47b82ef6a327e74f9c2ec3a440837fbac51d7108702133fe14673cc3e8704b",
+  "docs/DATE_PICKER.md": "ce27e6a4c24384f30d1a3d14740f483fb7827375fa93b41876e7bf7136d8b803",
+  "reservation405.html": "c8a38fada4a0c4afcc775cf628b9cd3feb3e9b24c15c2e9f2b353241348fcccd",
+  "script.js": "a3fcc56f9b1cda14b7a3aa505383f7bf91c40f42330b70ca251d418b3fd4aee0",
+  "tests/date-picker.browser.js": "455fab63f7b042b012b7b55707f98eacff4d28f921e7161a3564593155e7f24d",
+  "tests/date-picker.html": "e17efbe3f0c57692ed4b869ee7d89136be337149eeac798bca18fd41a5a01ee3",
+  "tests/date-picker.test.cjs": "ff7573c39c6416b531cb477e90b3dc5139582c1ac063acce1c67cdb76f7612bd"
+}

@@ -76,6 +76,20 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         init() {
+            if (this.elements.dateInput && window.ReservationDatePicker) {
+                this.datePicker = new window.ReservationDatePicker(this.elements.dateInput, {
+                    mode: 'single',
+                    getUnavailableReason: date => {
+                        if (!this.state.reservationDataLoaded) return '';
+                        const starts = [...this.elements.timeSelect.options].map(option => option.value).filter(Boolean);
+                        const fullyBooked = starts.every(time =>
+                            logic.checkLunchBreakConflict(time, 0.5) ||
+                            logic.isTimeSlotBooked(this.state.reservations, date, time, 0.5)
+                        );
+                        return fullyBooked ? '當日開放時段皆已預約，請選擇其他日期。' : '';
+                    },
+                });
+            }
             if (!this.config.GAS_URL) {
                 console.warn("GAS_URL 尚未設定。系統將無法與後端溝通。");
                 alert("系統設定不完整，請聯絡管理員。");
@@ -206,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         handlers: {
             handleDatePickerOpen(event) {
+                if (this.datePicker) return;
                 const dateInput = event.currentTarget;
                 if (typeof dateInput.showPicker !== 'function') return;
 
@@ -737,6 +752,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
 
             generateCalendar() {
+                App.datePicker?.sync();
                 const { currentYear, currentMonth, reservations, selectedDate } = App.state;
                 const calendarElement = App.elements.calendarContainer;
                 if (!calendarElement) return;

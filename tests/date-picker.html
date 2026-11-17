@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>日期選擇器行為檢查</title>
+<link rel="stylesheet" href="../date-picker.css">
+<style>
+body{font:16px/1.6 system-ui;margin:24px;color:#263044;background:#f8fafc}main{max-width:700px;margin:auto}section{margin:24px 0;padding:20px;background:white;border:1px solid #ddd;border-radius:20px}label{display:block;margin-bottom:8px}button{padding:10px;font:inherit}output{display:block;white-space:pre-wrap;margin-top:16px}input{padding:14px;font:inherit;box-sizing:border-box;width:100%}
+</style>
+<main>
+<h1>日期選擇器行為檢查</h1>
+<p>本頁使用固定測試日期，不連接預約後端。2026/11/20 為測試用客滿日。</p>
+<section><form id="singleForm"><label for="single">單日日期</label><input type="date" id="single" name="date" min="2026-11-17" value="2026-11-18" required><p id="singleHint">原生值與 change 事件會顯示在下方。</p><button type="reset">重設單日日期</button></form><output id="singleResult"></output></section>
+<section><label for="range">起訖日期</label><input type="date" id="range" min="2026-11-17" value="2026-11-18"><output id="rangeResult"></output></section>
+<button id="external" type="button">外部更新為 2026/12/25</button>
+<button id="disabled" type="button">切換單日停用狀態</button>
+<output id="events" aria-live="polite"></output>
+<button id="runTests" type="button">執行規格情境測試</button>
+<output id="testResults" aria-live="polite"></output>
+</main>
+<script src="../date-picker.js"></script>
+<script>
+const singleInput = document.getElementById('single');
+const rangeInput = document.getElementById('range');
+const reason = date => date === '2026-11-20' ? '測試：當日已客滿。' : '';
+const singlePicker = new ReservationDatePicker(singleInput, {getUnavailableReason: reason});
+const rangePicker = new ReservationDatePicker(rangeInput, {mode:'range', getUnavailableReason: reason});
+let changes = 0;
+const report = () => {
+    document.getElementById('singleResult').textContent = `原生日期：${singleInput.value}；格式有效：${singleInput.validity.valid}；change 次數：${changes}`;
+    document.getElementById('rangeResult').textContent = `區間原生起日：${rangeInput.value}`;
+};
+singleInput.addEventListener('change', () => {changes++; report();});
+rangeInput.addEventListener('change', report);
+rangeInput.addEventListener('date-range-change', event => {
+    document.getElementById('events').textContent = JSON.stringify(event.detail);
+});
+document.getElementById('external').onclick = () => {singleInput.value='2026-12-25'; singlePicker.sync(); report();};
+document.getElementById('disabled').onclick = () => {singleInput.disabled=!singleInput.disabled;};
+document.getElementById('singleForm').addEventListener('reset', () => setTimeout(report));
+report();
+</script>
+<script src="date-picker.browser.js"></script>
+</html>
